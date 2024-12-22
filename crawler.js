@@ -41,7 +41,7 @@ const fs_extra_1 = __importDefault(require("fs-extra"));
 const path_1 = __importDefault(require("path"));
 const downloadFile = (url, outputPath) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const response = yield axios_1.default.get(url, { responseType: 'arraybuffer' });
+        const response = yield axios_1.default.get(url, { responseType: "arraybuffer" });
         yield fs_extra_1.default.outputFile(outputPath, response.data);
         console.log(`Downloaded: ${url} -> ${outputPath}`);
     }
@@ -55,13 +55,13 @@ const crawlPage = (url, outputDir) => __awaiter(void 0, void 0, void 0, function
         const { data: html } = yield axios_1.default.get(url);
         const $ = cheerio.load(html);
         // Save the main HTML
-        const htmlPath = path_1.default.join(outputDir, 'index.html');
+        const htmlPath = path_1.default.join(outputDir, "index.html");
         yield fs_extra_1.default.outputFile(htmlPath, html);
         console.log(`Saved HTML to ${htmlPath}`);
         // Process <script> and <link> tags
         const resourceUrls = [];
         $('script[src], link[rel="stylesheet"]').each((_, elem) => {
-            const src = $(elem).attr('src') || $(elem).attr('href');
+            const src = $(elem).attr("src") || $(elem).attr("href");
             if (src) {
                 const absoluteUrl = new URL(src, url).href;
                 resourceUrls.push(absoluteUrl);
@@ -81,10 +81,14 @@ const crawlPage = (url, outputDir) => __awaiter(void 0, void 0, void 0, function
     }
 });
 const main = () => __awaiter(void 0, void 0, void 0, function* () {
-    const targetUrl = 'https://github.com/nalindalal'; // Replace with the target URL
-    const outputDir = path_1.default.resolve(__dirname, 'output'); // Save files in 'output' folder
+    const targetUrl = "https://github.com/nalindalal"; // Replace with the target URL
+    const outputDir = path_1.default.resolve(__dirname, "github"); // Save files in 'github' folder
+    const targetUrl1 = "https://leetcode.com/u/Nalindalal2004/";
+    const outputDir1 = path_1.default.resolve(__dirname, "leetcode");
     console.log(`Starting crawl for ${targetUrl}`);
     yield crawlPage(targetUrl, outputDir);
-    console.log('Crawl complete!');
+    console.log(`Starting crawl for ${targetUrl1}`);
+    yield crawlPage(targetUrl1, outputDir1);
+    console.log("Crawl complete!");
 });
 main().catch(console.error);
