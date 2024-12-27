@@ -13,7 +13,9 @@
     "axios": "^1.7.9",
     "cheerio": "^1.0.0",
     "fs-extra": "^11.2.0",
-    "path": "^0.12.7"
+    "inquirer": "^12.3.0",
+    "path": "^0.12.7",
+    "puppeteer": "^23.11.1"
   },
   "devDependencies": {
     "@types/fs-extra": "^11.0.4",
